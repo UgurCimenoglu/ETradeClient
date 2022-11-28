@@ -1,15 +1,16 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, OnInit } from '@angular/core';
+import { BaseComponent } from 'src/app/base/base.component';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+export class DashboardComponent extends BaseComponent implements OnInit {
+  constructor(spinner: NgxSpinnerService) {
+    super(spinner);
   }
 
+  ngOnInit(): void {}
 }
