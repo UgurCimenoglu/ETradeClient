@@ -1,0 +1,71 @@
+import { Create_Product } from './../../../contracts/create_product';
+import { Injectable } from '@angular/core';
+import { HttpClientService } from '../http-client.service';
+import {
+  AlertifyService,
+  MessageType,
+  Position,
+} from '../../admin/alertify.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Error } from 'src/app/contracts/error';
+import { List_Product } from 'src/app/contracts/product_list';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ProductService {
+  constructor(private httpClient: HttpClientService) {}
+
+  create(
+    product: Create_Product,
+    successCallBack?: any,
+    errorCallBack?: (errorMessage: Array<string>) => void
+  ) {
+    this.httpClient
+      .post(
+        {
+          controller: 'products',
+        },
+        product
+      )
+      .subscribe(
+        (result) => {
+          successCallBack();
+        },
+        (errorResponse: HttpErrorResponse) => {
+          const _error: Array<Error> = errorResponse.error;
+          let message: Array<string> = [];
+          _error.forEach((err, i) => {
+            err.value.forEach((v, i) => {
+              message.push(`Hata Alanı :${err.key} <br> Hata Mesajı : ${v}`);
+            });
+          });
+          errorCallBack(message);
+        }
+      );
+  }
+
+  async read(
+    page: number = 0,
+    size: number = 5,
+    successCallback?: () => void,
+    errorCallback?: (errorMessage) => void
+  ): Promise<{ totalCount: number; products: List_Product[] }> {
+    const promiseData: Promise<{
+      totalCount: number;
+      products: List_Product[];
+    }> = this.httpClient
+      .get<{ totalCount: number; products: List_Product[] }>({
+        controller: 'products',
+        queryString: `page=${page}&size=${size}`,
+      })
+      .toPromise();
+
+    promiseData
+      .then((d) => successCallback())
+      .catch((errorResponse: HttpErrorResponse) => {
+        errorCallback(errorResponse.message);
+      });
+    return await promiseData;
+  }
+}

@@ -2,11 +2,27 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductsComponent } from './products.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { CreateComponent } from './create/create.component';
+import { ListComponent } from './list/list.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
-  declarations: [ProductsComponent],
+  declarations: [ProductsComponent, CreateComponent, ListComponent],
   imports: [
     CommonModule,
+    MatSidenavModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule,
     RouterModule.forChild([{ path: '', component: ProductsComponent }]),
   ],
 })

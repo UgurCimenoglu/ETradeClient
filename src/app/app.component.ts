@@ -14,13 +14,13 @@ export class AppComponent {
   title = 'ETradeClient';
 
   constructor(private toastrService: CustomToastrService) {
-    this.toastrService.message('Merhaba', 'İlk Mesaj', {
-      messageType: ToastrMessageType.Info,
-      position: ToastrPosition.TopFullWidth,
-    });
-    this.toastrService.message('Merhaba', 'İkinci Mesaj', {
-      messageType: ToastrMessageType.Error,
-      position: ToastrPosition.BottomLeft,
-    });
+    // this.toastrService.message('Merhaba', 'İlk Mesaj', {
+    //   messageType: ToastrMessageType.Info,
+    //   position: ToastrPosition.TopFullWidth,
+    // });
+    // this.toastrService.message('Merhaba', 'İkinci Mesaj', {
+    //   messageType: ToastrMessageType.Error,
+    //   position: ToastrPosition.BottomLeft,
+    // });
   }
 }

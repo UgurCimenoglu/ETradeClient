@@ -1,0 +1,25 @@
+<mat-card>
+  <mat-card-content>
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Name" #txtName />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Stock</mat-label>
+      <input type="number" min="0" matInput placeholder="Stock" #txtStock />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Price</mat-label>
+      <input type="number" min="0" matInput placeholder="Price" #txtPrice />
+    </mat-form-field>
+    <div class="example-button-row">
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="create(txtName, txtPrice, txtStock)"
+      >
+        Create Product
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -14,6 +14,6 @@ export class LayoutComponent implements OnInit {
   constructor(private alertify: AlertifyService) {}
 
   ngOnInit(): void {
-    this.alertify.message('Merhaba', {delay:3,dismissOthers:false,messageType:MessageType.Error,position:Position.BottomLeft});
+    // this.alertify.message('Merhaba', {delay:3,dismissOthers:false,messageType:MessageType.Error,position:Position.BottomLeft});
   }
 }
