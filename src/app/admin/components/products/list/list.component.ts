@@ -32,6 +32,8 @@ export class ListComponent extends BaseComponent implements OnInit {
     'price',
     'createdDate',
     'updatedDate',
+    'edit',
+    'delete',
   ];
   dataSource: MatTableDataSource<List_Product> = null;
   async ngOnInit() {
@@ -40,7 +42,6 @@ export class ListComponent extends BaseComponent implements OnInit {
   async pageChanged() {
     await this.getProducts();
   }
-
   async getProducts() {
     this.showSpinner(SpinnerType.BallSpinClockwise);
     const allProducts: { totalCount: number; products: List_Product[] } =
@@ -62,6 +63,8 @@ export class ListComponent extends BaseComponent implements OnInit {
     );
     this.paginator.length = allProducts.totalCount;
   }
-
- 
+  delete(id: number, event: MouseEvent) {
+    console.log(id);
+    console.log(event);
+  }
 }

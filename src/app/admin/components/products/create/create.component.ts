@@ -7,6 +7,7 @@ import {
   MessageType,
   Position,
 } from 'src/app/services/admin/alertify.service';
+import { FileUploadOptions } from 'src/app/services/common/file-upload/file-upload.component';
 import { ProductService } from 'src/app/services/common/models/product.service';
 
 @Component({
@@ -26,13 +27,19 @@ export class CreateComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {}
 
   @Output() createdProduct: EventEmitter<any> = new EventEmitter();
-
+  @Output() fileUploadOptions: Partial<FileUploadOptions> = {
+    action: 'upload',
+    controller: 'products',
+    explanation: 'Dosya(ları) sürükleyiniz veya seçiniz...',
+    isAdminPage: true,
+    accept: '.png,.jpg,.jpeg',
+  };
   create(
     name: HTMLInputElement,
     price: HTMLInputElement,
     stock: HTMLInputElement
   ) {
-    this.showSpinner(SpinnerType.SquareJellyBox);
+    this.showSpinner(SpinnerType.BallSpinClockwise);
     const create_product: Create_Product = {
       name: name.value,
       price: parseInt(price.value),
@@ -41,7 +48,6 @@ export class CreateComponent extends BaseComponent implements OnInit {
     this.productService.create(
       create_product,
       () => {
-        this.hideSpinner(SpinnerType.SquareJellyBox);
         this.alertifyService.message('Ürün Başarıyla Eklemiştir.', {
           dismissOthers: true,
           messageType: MessageType.Success,
