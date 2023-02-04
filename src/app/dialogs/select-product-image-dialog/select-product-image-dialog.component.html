@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Add Photo</h2>
+<mat-dialog-content class="mat-typography">
+  <app-file-upload [options]="options"></app-file-upload>
+
+  <div class="product-image-div">
+    <mat-card class="product-image-card" *ngFor="let image of images">
+      <mat-card-header> </mat-card-header>
+      <img
+        class="product-image"
+        mat-card-image
+        [src]="image.path"
+        alt="Photo"
+        [id]="image.id"
+      />
+      <mat-card-content> </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="warn" (click)="deleteImage(image.id)">
+          Delete
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="0">İptal</button>
+</mat-dialog-actions>

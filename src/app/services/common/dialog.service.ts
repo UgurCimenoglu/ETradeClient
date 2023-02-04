@@ -9,11 +9,13 @@ export class DialogService {
   constructor(private dialog: MatDialog) {}
 
   openDialog(dialogParameters: Partial<DialogParameters>): void {
-    const dialogRef = this.dialog.open(dialogParameters.componentType, {});
+    const dialogRef = this.dialog.open(dialogParameters.componentType, {
+      data: dialogParameters.data,
+    });
 
     dialogRef.beforeClosed().subscribe((result) => {
       if (result === 1) {
-        dialogParameters.beforeClosed();
+        dialogParameters.beforeClosed && dialogParameters.beforeClosed();
       } else {
         dialogParameters.reject && dialogParameters?.reject();
       }
@@ -23,6 +25,7 @@ export class DialogService {
 
 export class DialogParameters {
   componentType: ComponentType<any>;
-  beforeClosed: () => any;
+  beforeClosed?: () => any;
   reject?: () => any;
+  data?: any;
 }

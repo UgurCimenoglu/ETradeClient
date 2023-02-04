@@ -15,6 +15,8 @@ import {
   ToastrPosition,
 } from '../../ui/custom-toastr.service';
 import { HttpClientService } from '../http-client.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerType } from 'src/app/base/base.component';
 
 @Component({
   selector: 'app-file-upload',
@@ -26,7 +28,8 @@ export class FileUploadComponent {
     private httpClientService: HttpClientService,
     private toastrService: CustomToastrService,
     private alertifyService: AlertifyService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private spinner: NgxSpinnerService
   ) {}
 
   public files: NgxFileDropEntry[];
@@ -47,6 +50,7 @@ export class FileUploadComponent {
     this.dialogService.openDialog({
       componentType: FileUploadDialogsComponent,
       beforeClosed: () => {
+        this.spinner.show(SpinnerType.BallSpinClockwise);
         this.httpClientService
           .post(
             {
@@ -71,8 +75,10 @@ export class FileUploadComponent {
                   position: ToastrPosition.TopRight,
                 });
               }
+              this.spinner.hide(SpinnerType.BallSpinClockwise);
             },
             (error: HttpErrorResponse) => {
+              this.spinner.hide(SpinnerType.BallSpinClockwise);
               const message = 'Dosya(lar) yüklenirken hata meydana geldi.';
               if (this.options.isAdminPage) {
                 this.alertifyService.message(message, {
