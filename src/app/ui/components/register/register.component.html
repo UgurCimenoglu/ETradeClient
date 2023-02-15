@@ -1,0 +1,165 @@
+<div
+  class="d-flex justify-content-center align-items-center"
+  style="min-height: 70vh"
+>
+  <div class="col-md-4">
+    <div class="card p-5">
+      <form [formGroup]="frm" (ngSubmit)="onSubmit(frm.value)">
+        <div class="mb-3">
+          <label for="fullname" class="form-label">Ad-Soyad *</label>
+          <input
+            type="text"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                (component.fullname.touched || submitted) &&
+                component.fullname.errors
+            }"
+            id="fullname"
+            aria-describedby="fullnameHelp"
+            placeholder="Ad-Soyad Giriniz"
+            formControlName="fullname"
+          />
+          <ng-container
+            *ngIf="
+              (component.fullname.touched || submitted) &&
+              component.fullname.errors
+            "
+          >
+            <div
+              id="fullnameHelp"
+              class="form-text text-danger"
+              *ngFor="let error of component.fullname.errors | keyvalue"
+            >
+              {{ validationMessages.fullname[error.key] }}
+            </div>
+          </ng-container>
+        </div>
+        <div class="mb-3">
+          <label for="username" class="form-label">Kullanıcı Adı *</label>
+          <input
+            type="text"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                (component.username.touched || submitted) &&
+                component.username.errors
+            }"
+            id="username"
+            aria-describedby="usernameHelp"
+            placeholder="Kullanıcı Adı Giriniz"
+            formControlName="username"
+          />
+          <ng-container
+            *ngIf="
+              (component.username.touched || submitted) &&
+              component.username.errors
+            "
+          >
+            <div
+              id="usernameHelp"
+              class="form-text text-danger"
+              *ngFor="let error of component.username.errors | keyvalue"
+            >
+              {{ validationMessages.username[error.key] }}
+            </div>
+          </ng-container>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email *</label>
+          <input
+            type="email"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                (component.email.touched || submitted) && component.email.errors
+            }"
+            id="email"
+            aria-describedby="emailHelp"
+            placeholder="Email Giriniz"
+            formControlName="email"
+          />
+          <ng-container
+            *ngIf="
+              (component.email.touched || submitted) && component.email.errors
+            "
+          >
+            <div
+              id="emailHelp"
+              class="form-text text-danger"
+              *ngFor="let error of component.email.errors | keyvalue"
+            >
+              {{ validationMessages.email[error.key] }}
+            </div>
+          </ng-container>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Şifre *</label>
+          <input
+            type="password"
+            class="form-control"
+            aria-describedby="passwordHelp"
+            [ngClass]="{
+              'is-invalid':
+                (component.password.touched || submitted) && component.password.errors
+            }"
+            id="password"
+            placeholder="Şifre Giriniz"
+            formControlName="password"
+          />
+          <ng-container
+            *ngIf="
+              (component.password.touched || submitted) && component.password.errors
+            "
+          >
+            <div
+              id="passwordHelp"
+              class="form-text text-danger"
+              *ngFor="let error of component.password.errors | keyvalue"
+            >
+              {{ validationMessages.password[error.key] }}
+            </div>
+          </ng-container>
+        </div>
+        <div class="mb-3">
+          <label for="confirmpassword" class="form-label">Şifre Tekrar *</label>
+          <input
+            type="password"
+            class="form-control"
+            aria-describedby="passwordConfirmHelp"
+            [ngClass]="{
+              'is-invalid':
+                (component.passwordConfirm.touched || submitted) &&
+                component.passwordConfirm.errors
+            }"
+            id="confirmpassword"
+            placeholder="Şifrenizi Tekrar Giriniz"
+            formControlName="passwordConfirm"
+          />
+          <ng-container
+            *ngIf="
+              (component.passwordConfirm.touched || submitted) &&
+              component.passwordConfirm.errors
+            "
+          >
+            <div
+              id="passwordConfirmHelp"
+              class="form-text text-danger"
+              *ngFor="let error of component.passwordConfirm.errors | keyvalue"
+            >
+              {{ validationMessages.passwordConfirm[error.key] }}
+            </div>
+          </ng-container>
+          <ng-container *ngIf="submitted && frm.hasError('notSame')">
+            <div id="passwordConfirmHelp" class="form-text text-danger">
+              {{ validationMessages.passwordConfirm['notSame'] }}
+            </div>
+          </ng-container>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary">Oluştur</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
