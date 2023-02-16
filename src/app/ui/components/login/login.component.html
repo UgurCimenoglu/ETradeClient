@@ -1,0 +1,74 @@
+<div
+  class="d-flex justify-content-center align-items-center"
+  style="min-height: 70vh"
+>
+  <div class="col-md-4">
+    <div class="card p-5">
+      <form [formGroup]="frm" (ngSubmit)="onSubmit(frm.value)">
+        <div class="mb-3">
+          <label for="username" class="form-label">Kullanıcı Adı *</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            [ngClass]="{
+              'is-invalid':
+                (component.usernameOrEmail.touched || submitted) &&
+                component.usernameOrEmail.errors
+            }"
+            aria-describedby="usernameHelp"
+            placeholder="Kullanıcı Adı Giriniz"
+            formControlName="usernameOrEmail"
+          />
+          <ng-container
+            *ngIf="
+              (component.usernameOrEmail.touched || submitted) &&
+              component.usernameOrEmail.errors
+            "
+          >
+            <div
+              id="usernameHelp"
+              class="form-text text-danger"
+              *ngFor="let error of component.usernameOrEmail.errors | keyvalue"
+            >
+              {{ validationMessages.usernameOrEmail[error.key] }}
+            </div>
+          </ng-container>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Şifre *</label>
+          <input
+            type="password"
+            class="form-control"
+            aria-describedby="passwordHelp"
+            id="password"
+            [ngClass]="{
+              'is-invalid':
+                (component.password.touched || submitted) &&
+                component.password.errors
+            }"
+            placeholder="Şifre Giriniz"
+            formControlName="password"
+          />
+          <ng-container
+            *ngIf="
+              (component.password.touched || submitted) &&
+              component.password.errors
+            "
+          >
+            <div
+              id="passwordHelp"
+              class="form-text text-danger"
+              *ngFor="let error of component.password.errors | keyvalue"
+            >
+              {{ validationMessages.password[error.key] }}
+            </div>
+          </ng-container>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary">Giriş Yap</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
