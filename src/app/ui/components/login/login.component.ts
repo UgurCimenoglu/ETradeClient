@@ -1,10 +1,17 @@
+import { ToastrMessageType } from './../../../services/ui/custom-toastr.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Login_User } from './../../../contracts/users/login_user';
 import { UserService } from './../../../services/common/models/user.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CustomToastrService } from 'src/app/services/ui/custom-toastr.service';
+import {
+  CustomToastrService,
+  ToastrPosition,
+} from 'src/app/services/ui/custom-toastr.service';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
+import { MessageType } from 'src/app/services/admin/alertify.service';
+import { AuthService } from 'src/app/services/common/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +23,10 @@ export class LoginComponent extends BaseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toast: CustomToastrService,
     private userService: UserService,
-    spinner: NgxSpinnerService
+    spinner: NgxSpinnerService,
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
     super(spinner);
   }
@@ -49,12 +59,25 @@ export class LoginComponent extends BaseComponent implements OnInit {
     if (this.frm.valid) {
       this.showSpinner(SpinnerType.SquareJellyBox);
       try {
-        await this.userService.login(value);
+        await this.userService.login(value, () => {
+          this.authService.identityCheck();
+          this.activatedRoute.queryParams.subscribe((params) => {
+            const returnUrl = params['returnUrl'];
+            if (returnUrl) {
+              this.router.navigate([returnUrl]);
+            }else{
+              this.router.navigate([""]);
+            }
+          });
+          this.toast.message('Kullanıcı Girişi Başarılı', 'Bilgilendirme', {
+            messageType: ToastrMessageType.Success,
+            position: ToastrPosition.TopRight,
+          });
+        });
       } catch (error) {
       } finally {
         this.hideSpinner(SpinnerType.SquareJellyBox);
       }
-    } else {
     }
   };
 

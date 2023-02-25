@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  CustomToastrService,
-  ToastrMessageType,
-  ToastrPosition,
-} from './services/ui/custom-toastr.service';
+import { AuthService } from './services/common/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +7,11 @@ import {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'ETradeClient';
+  constructor(public authService: AuthService) {
+    authService.identityCheck();
+  }
 
-  constructor(private toastrService: CustomToastrService) {
-    // this.toastrService.message('Merhaba', 'İlk Mesaj', {
-    //   messageType: ToastrMessageType.Info,
-    //   position: ToastrPosition.TopFullWidth,
-    // });
-    // this.toastrService.message('Merhaba', 'İkinci Mesaj', {
-    //   messageType: ToastrMessageType.Error,
-    //   position: ToastrPosition.BottomLeft,
-    // });
+  signOut() {
+    this.authService.signOut();
   }
 }

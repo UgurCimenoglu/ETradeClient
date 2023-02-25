@@ -3,19 +3,21 @@ import { DashboardComponent } from './admin/components/dashboard/dashboard.compo
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './admin/layout/layout.component';
+import { AuthGuard } from './guards/common/auth.guard';
 
 const routes: Routes = [
   {
     path: 'admin',
     component: LayoutComponent,
     children: [
-      { path: '', component: DashboardComponent },
+      { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
       {
         path: 'customers',
         loadChildren: () =>
           import('./admin/components/customers/customers.module').then(
             (module) => module.CustomersModule
           ),
+        canActivate: [AuthGuard],
       },
       {
         path: 'products',
@@ -23,6 +25,7 @@ const routes: Routes = [
           import('./admin/components/products/products.module').then(
             (module) => module.ProductsModule
           ),
+        canActivate: [AuthGuard],
       },
       {
         path: 'orders',
@@ -30,8 +33,10 @@ const routes: Routes = [
           import('./admin/components/orders/orders.module').then(
             (module) => module.OrdersModule
           ),
+        canActivate: [AuthGuard],
       },
     ],
+    canActivate: [AuthGuard], //AuthGuard'ın içindeki logicler sağlandığı sürece bu objedeki routelere erişebileceğiz. AuthGuard bize true veya false dönecek
   },
   { path: '', component: HomeComponent },
   {

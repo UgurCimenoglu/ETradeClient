@@ -17,19 +17,19 @@ export class ProductsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.httpClientService
-      .get({
-        controller: 'products',
-      })
-      .subscribe((data) => {
-        console.log(data);
-      });
-    this.httpClientService.delete(
-      {
-        controller: 'products',
-      },
-      'e2aee5ab-8353-424b-b12d-22a73be5228f'
-    ).subscribe();
+    // this.httpClientService
+    //   .get({
+    //     controller: 'products',
+    //   })
+    //   .subscribe((data) => {
+    //     console.log(data);
+    //   });
+    // this.httpClientService.delete(
+    //   {
+    //     controller: 'products',
+    //   },
+    //   'e2aee5ab-8353-424b-b12d-22a73be5228f'
+    // ).subscribe();
     // this.httpClientService
     //   .put(
     //     {
