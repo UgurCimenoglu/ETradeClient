@@ -1,3 +1,4 @@
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Router } from '@angular/router';
 import {
   CustomToastrService,
@@ -14,7 +15,8 @@ export class AuthService {
   constructor(
     private jwtHelper: JwtHelperService,
     private toastr: CustomToastrService,
-    private router: Router
+    private router: Router,
+    private socialAuthService: SocialAuthService
   ) {}
 
   identityCheck() {
@@ -33,8 +35,9 @@ export class AuthService {
     return _isAuthenticated;
   }
 
-  signOut() {
+  async signOut() {
     localStorage.removeItem('accessToken');
+    this.socialAuthService.signOut();
     this.identityCheck();
     this.router.navigate(['']);
     this.toastr.message('Başarıyla çıkış yapıldı.', 'Bilgilendirme!', {

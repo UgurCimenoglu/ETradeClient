@@ -1,3 +1,4 @@
+import { HttpErrorHandlerInterceptorService } from './services/common/http-error-handler-interceptor.service';
 import { UiModule } from './ui/ui.module';
 import { AdminModule } from './admin/admin.module';
 import { NgModule } from '@angular/core';
@@ -9,11 +10,19 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
+import { LoginComponent } from './ui/components/login/login.component';
+import {
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+} from '@abacritt/angularx-social-login';
+import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login/socialauth.service';
+import { SocialLoginModule } from '@abacritt/angularx-social-login';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -30,9 +39,31 @@ import { JwtModule } from '@auth0/angular-jwt';
         allowedDomains: ['localhost:7245'],
       },
     }),
+    SocialLoginModule,
+    ReactiveFormsModule,
   ],
   providers: [
     { provide: 'baseUrl', useValue: 'https://localhost:7245/api', multi: true },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '973727059764-1uns1uhj1rlrra1lm7ncbtjdg3j8eljk.apps.googleusercontent.com'
+            ),
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('938154687551202'),
+          },
+        ],
+        onError: (err) => console.log(err),
+      } as SocialAuthServiceConfig,
+    },
+    {provide:HTTP_INTERCEPTORS,useClass:HttpErrorHandlerInterceptorService,multi:true} //http error intertceptoru projeye tanımlıyoruz.
   ],
   bootstrap: [AppComponent],
 })

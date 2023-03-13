@@ -6,6 +6,7 @@ import { Observable, firstValueFrom } from 'rxjs';
 import { Login_User } from 'src/app/contracts/users/login_user';
 import { Token } from 'src/app/contracts/token/token';
 import { TokenResponse } from 'src/app/contracts/token/tokenResponse';
+import { SocialUser } from '@abacritt/angularx-social-login';
 
 @Injectable({
   providedIn: 'root',
@@ -24,20 +25,5 @@ export class UserService {
     return (await firstValueFrom(observable)) as Create_User;
   }
 
-  async login(values: Login_User, successCallback: () => void): Promise<any> {
-    const observable: Observable<any | TokenResponse> =
-      this.httpClientService.post<any | Token>(
-        {
-          controller: 'users',
-          action: 'login',
-        },
-        values
-      );
-    const token: TokenResponse = await firstValueFrom(observable);
-    if (token) {
-      localStorage.setItem('accessToken', token.token.accessToken);
-      localStorage.setItem('expiration', token.token.expiration.toString());
-      successCallback();
-    }
-  }
+ 
 }

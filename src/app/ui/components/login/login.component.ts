@@ -9,9 +9,14 @@ import {
   ToastrPosition,
 } from 'src/app/services/ui/custom-toastr.service';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
-import { MessageType } from 'src/app/services/admin/alertify.service';
 import { AuthService } from 'src/app/services/common/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import {
+  SocialUser,
+  FacebookLoginProvider,
+} from '@abacritt/angularx-social-login';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { UserAuthService } from 'src/app/services/common/models/user-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -25,8 +30,10 @@ export class LoginComponent extends BaseComponent implements OnInit {
     private userService: UserService,
     spinner: NgxSpinnerService,
     private authService: AuthService,
+    private userAuthService: UserAuthService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private socialAuthService: SocialAuthService
   ) {
     super(spinner);
   }
@@ -51,6 +58,22 @@ export class LoginComponent extends BaseComponent implements OnInit {
         ],
       ],
     });
+
+    this.socialAuthService.authState.subscribe(async (user: SocialUser) => {
+      if (user) {
+        switch (user.provider) {
+          case 'GOOGLE':
+            await this.onGoogleLoginSubmit(user);
+            break;
+          case 'FACEBOOK':
+            await this.onFacebookLoginSubmit(user);
+            break;
+          default:
+            break;
+        }
+      }
+      console.log(JSON.stringify(user, null, 2));
+    });
   }
 
   submitted = false;
@@ -59,14 +82,14 @@ export class LoginComponent extends BaseComponent implements OnInit {
     if (this.frm.valid) {
       this.showSpinner(SpinnerType.SquareJellyBox);
       try {
-        await this.userService.login(value, () => {
+        await this.userAuthService.login(value, () => {
           this.authService.identityCheck();
           this.activatedRoute.queryParams.subscribe((params) => {
             const returnUrl = params['returnUrl'];
             if (returnUrl) {
               this.router.navigate([returnUrl]);
-            }else{
-              this.router.navigate([""]);
+            } else {
+              this.router.navigate(['']);
             }
           });
           this.toast.message('Kullanıcı Girişi Başarılı', 'Bilgilendirme', {
@@ -80,6 +103,56 @@ export class LoginComponent extends BaseComponent implements OnInit {
       }
     }
   };
+
+  onGoogleLoginSubmit = async (user: SocialUser) => {
+    this.showSpinner(SpinnerType.SquareJellyBox);
+    try {
+      await this.userAuthService.googleLogin(user, () => {
+        this.authService.identityCheck();
+        this.activatedRoute.queryParams.subscribe((params) => {
+          const returnUrl = params['returnUrl'];
+          if (returnUrl) {
+            this.router.navigate([returnUrl]);
+          } else {
+            this.router.navigate(['']);
+          }
+        });
+        this.toast.message('Kullanıcı Girişi Başarılı', 'Bilgilendirme', {
+          messageType: ToastrMessageType.Success,
+          position: ToastrPosition.TopRight,
+        });
+      });
+    } catch (error) {
+    } finally {
+      this.hideSpinner(SpinnerType.SquareJellyBox);
+    }
+  };
+  onFacebookLoginSubmit = async (user: SocialUser) => {
+    this.showSpinner(SpinnerType.SquareJellyBox);
+    try {
+      await this.userAuthService.facebookLogin(user, () => {
+        this.authService.identityCheck();
+        this.activatedRoute.queryParams.subscribe((params) => {
+          const returnUrl = params['returnUrl'];
+          if (returnUrl) {
+            this.router.navigate([returnUrl]);
+          } else {
+            this.router.navigate(['']);
+          }
+        });
+        this.toast.message('Kullanıcı Girişi Başarılı', 'Bilgilendirme', {
+          messageType: ToastrMessageType.Success,
+          position: ToastrPosition.TopRight,
+        });
+      });
+    } catch (error) {
+    } finally {
+      this.hideSpinner(SpinnerType.SquareJellyBox);
+    }
+  };
+  openFaceebookLoginInterface() {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
 
   get component() {
     return this.frm.controls;
