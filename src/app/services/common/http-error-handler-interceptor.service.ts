@@ -13,6 +13,9 @@ import {
   ToastrMessageType,
   ToastrPosition,
 } from '../ui/custom-toastr.service';
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerType } from 'src/app/base/base.component';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +23,9 @@ import {
 export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
   constructor(
     private toastrService: CustomToastrService,
-    private userAuthService: UserAuthService
+    private userAuthService: UserAuthService,
+    private route: Router,
+    private spinner: NgxSpinnerService
   ) {}
   intercept(
     req: HttpRequest<any>,
@@ -30,16 +35,34 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
       catchError((error) => {
         switch (error.status) {
           case HttpStatusCode.Unauthorized:
-            this.toastrService.message(
-              'Bu işleme erişim yetkiniz bulunmamaktadır!',
-              'Yetki Hatası!',
-              {
-                messageType: ToastrMessageType.Warning,
-                position: ToastrPosition.TopCenter,
-              }
-            );
+            const url = this.route.url;
             this.userAuthService
-              .refreshTokenLogin(localStorage.getItem('refreshToken'), () => {})
+              .refreshTokenLogin(
+                localStorage.getItem('refreshToken'),
+                (state: boolean) => {
+                  if (!state) {
+                    if (url === '/products') {
+                      this.toastrService.message(
+                        'Sepete ürün eklemek için giriş yapmanız gerekmektedir!',
+                        'Oturum Açınız!',
+                        {
+                          messageType: ToastrMessageType.Warning,
+                          position: ToastrPosition.TopRight,
+                        }
+                      );
+                    } else {
+                      this.toastrService.message(
+                        'Bu işleme erişim yetkiniz bulunmamaktadır!',
+                        'Yetki Hatası!',
+                        {
+                          messageType: ToastrMessageType.Warning,
+                          position: ToastrPosition.TopRight,
+                        }
+                      );
+                    }
+                  }
+                }
+              )
               .then((data) => {});
             break;
           case HttpStatusCode.InternalServerError:
@@ -48,7 +71,7 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
               'Sunucu Erişim Hatası!',
               {
                 messageType: ToastrMessageType.Warning,
-                position: ToastrPosition.TopCenter,
+                position: ToastrPosition.TopRight,
               }
             );
             break;
@@ -58,7 +81,7 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
               'Geçersiz İstek!',
               {
                 messageType: ToastrMessageType.Warning,
-                position: ToastrPosition.TopCenter,
+                position: ToastrPosition.TopRight,
               }
             );
             break;
@@ -68,7 +91,7 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
               'Veri Bulunamadı!',
               {
                 messageType: ToastrMessageType.Warning,
-                position: ToastrPosition.TopCenter,
+                position: ToastrPosition.TopRight,
               }
             );
             break;
@@ -78,11 +101,13 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
               'Beklenmeyen Hata!',
               {
                 messageType: ToastrMessageType.Warning,
-                position: ToastrPosition.TopCenter,
+                position: ToastrPosition.TopRight,
               }
             );
             break;
         }
+        this.spinner.hide(SpinnerType.BallSpinClockwise);
+        this.spinner.hide(SpinnerType.SquareJellyBox);
         return of(error);
       })
     );

@@ -58,6 +58,17 @@ export class SelectProductImageDialogComponent implements OnInit {
       },
     });
   }
+
+  showCase = (imageId: string) => {
+    this.spinnerService.show(SpinnerType.BallSpinClockwise);
+    this.productService.changeShowCaseImage(
+      imageId,
+      this.data as string,
+      () => {
+        this.spinnerService.hide(SpinnerType.BallSpinClockwise);
+      }
+    );
+  };
 }
 
 export enum ProductImageDialogState {

@@ -117,4 +117,19 @@ export class ProductService {
         errorCallback && errorCallback();
       });
   }
+
+  async changeShowCaseImage(
+    imageId: string,
+    productId: string,
+    successCallback: () => void
+  ): Promise<void> {
+    const changeShowCaseImageObservable = this.httpClient.get({
+      controller: 'products',
+      action: 'ChangeShowCaseImage',
+      queryString: `imageId=${imageId}&&productId=${productId}`,
+    });
+
+    await firstValueFrom(changeShowCaseImageObservable);
+    successCallback();
+  }
 }

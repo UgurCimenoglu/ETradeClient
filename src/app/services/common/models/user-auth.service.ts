@@ -74,7 +74,10 @@ export class UserAuthService {
     }
   }
 
-  async refreshTokenLogin(refreshToken: string, successCallback: () => void) {
+  async refreshTokenLogin(
+    refreshToken: string,
+    successCallback: (state) => void
+  ) {
     const observable: Observable<any | TokenResponse> =
       this.httpClientService.post(
         {
@@ -83,13 +86,17 @@ export class UserAuthService {
         },
         { refreshToken: refreshToken }
       );
-    const tokenResponse: TokenResponse = (await firstValueFrom(
-      observable
-    )) as TokenResponse;
-    if (tokenResponse) {
-      localStorage.setItem('accessToken', tokenResponse.token.accessToken);
-      localStorage.setItem('refreshToken', tokenResponse.token.refreshToken);
-      successCallback();
+    try {
+      const tokenResponse: TokenResponse = (await firstValueFrom(
+        observable
+      )) as TokenResponse;
+      if (tokenResponse) {
+        localStorage.setItem('accessToken', tokenResponse.token.accessToken);
+        localStorage.setItem('refreshToken', tokenResponse.token.refreshToken);
+        successCallback(tokenResponse ? true : false);
+      }
+    } catch (error) {
+      successCallback(false);
     }
   }
 }

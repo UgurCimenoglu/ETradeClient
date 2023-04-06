@@ -2,16 +2,19 @@
   <div *ngFor="let product of products" class="col-lg-3 col-md-4 col-sm-6 my-2">
     <div class="card">
       <img
-        src="../../../../../assets/default-product.png"
+        [src]="product.imagePath ?? '../../../../../assets/default-product.png'"
         class="card-img-top"
         alt="..."
+        style="height: 300px; object-fit: cover"
       />
       <div class="card-body">
         <h2 class="card-title">{{ product.name }}</h2>
         <div class="d-flex justify-content-between align-items-center">
           <span>{{ product.price | currency : "₺" }}</span>
 
-          <a href="#" class="btn btn-primary float-end">Sepete Ekle</a>
+          <a (click)="addToBasket(product)" class="btn btn-primary float-end"
+            >Sepete Ekle</a
+          >
         </div>
       </div>
     </div>
@@ -23,13 +26,20 @@
       <li class="page-item">
         <a
           class="page-link"
-          [routerLink]="['/products', currentPageNo -1<=0 ? 1:currentPageNo-1]"
+          [routerLink]="[
+            '/products',
+            currentPageNo - 1 <= 0 ? 1 : currentPageNo - 1
+          ]"
           aria-label="Previous"
         >
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
-      <li class="page-item" *ngFor="let pageNo of pageList" routerLinkActive="active">
+      <li
+        class="page-item"
+        *ngFor="let pageNo of pageList"
+        routerLinkActive="active"
+      >
         <a class="page-link" [routerLink]="['/products', pageNo]">{{
           pageNo
         }}</a>
@@ -39,7 +49,9 @@
           class="page-link"
           [routerLink]="[
             '/products',
-            currentPageNo + 1 >= totalPageCount ? totalPageCount : currentPageNo+1
+            currentPageNo + 1 >= totalPageCount
+              ? totalPageCount
+              : currentPageNo + 1
           ]"
           aria-label="Next"
         >

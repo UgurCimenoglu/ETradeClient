@@ -1,1 +1,82 @@
-<p>baskets works!</p>
+<div
+  class="offcanvas offcanvas-end"
+  tabindex="-1"
+  id="offcanvasRight"
+  aria-labelledby="offcanvasRightLabel"
+>
+  <!-- //loading gif -->
+  <div
+    [hidden]="!basketSpinner"
+    class="spinner-border"
+    style="top: 50%; left: 50%; position: absolute"
+    role="status"
+  >
+    <span class="sr-only"></span>
+  </div>
+  <div class="offcanvas-header justify-content-end">
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+
+  <div class="container">
+    <div
+      [hidden]="basketSpinner"
+      *ngFor="let item of basketItems"
+      class="card mb-3"
+      style="max-width: 540px"
+    >
+      <div class="row g-0">
+        <div class="col-4">
+          <img
+            [src]="item.image || '../../../../../assets/default-product.png'"
+            class="img-fluid"
+            style="object-fit: cover; height: 100%"
+            alt="..."
+          />
+        </div>
+        <div class="col-8">
+          <div class="card-body">
+            <div class="mb-2">
+              <strong class="card-title">{{ item.name }}</strong>
+              <p class="card-text">Description Here</p>
+              <strong class="card-text">{{
+                item.price | currency : "₺"
+              }}</strong>
+            </div>
+            <div
+              class="input-group input-group-sm d-flex justify-content-between align-items-center"
+            >
+              <div class="d-flex">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">Adet</span>
+                </div>
+                <input
+                  type="number"
+                  min="1"
+                  class="form-control"
+                  placeholder=""
+                  aria-label=""
+                  aria-describedby="basic-addon1"
+                  style="max-width: 5rem"
+                  value="{{ item.quantity }}"
+                  (change)="updateQuantity($event, item.basketItemId)"
+                />
+              </div>
+              <img
+                width="26px"
+                height="26px"
+                src="../assets/trash.png"
+                style="cursor: pointer"
+                (click)="removeToBasket(item.basketItemId)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

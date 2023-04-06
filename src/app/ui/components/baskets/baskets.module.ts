@@ -9,5 +9,6 @@ import { BasketsComponent } from './baskets.component';
     CommonModule,
     RouterModule.forChild([{ path: '', component: BasketsComponent }]),
   ],
+  exports: [BasketsComponent],
 })
 export class BasketsModule {}
