@@ -1,14 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
   HubConnection,
   HubConnectionBuilder,
   HubConnectionState,
 } from '@microsoft/signalr';
+import { HubUrls } from 'src/app/constants/hub-urls';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SignalRService {
+  constructor(@Inject('baseSignalRUrl') private baseSignalRUrl: string) {}
+
   private _connection: HubConnection;
   get connection(): HubConnection {
     console.log('atama yapıldı');
@@ -16,6 +19,7 @@ export class SignalRService {
   }
 
   start(hubUrl: string) {
+    hubUrl = this.baseSignalRUrl + hubUrl;
     const builder: HubConnectionBuilder = new HubConnectionBuilder();
     const connection: HubConnection = builder
       .withUrl(hubUrl)
@@ -49,10 +53,11 @@ export class SignalRService {
       .catch(errorCallback);
   }
 
-  on(procedureName: string, callback: (...message: any) => void) {
-    this.start('https://localhost:7245/products-hub').on(
-      procedureName,
-      callback
-    );
+  on(
+    hubUrl: HubUrls,
+    procedureName: string,
+    callback: (...message: any) => void
+  ) {
+    this.start(hubUrl).on(procedureName, callback);
   }
 }

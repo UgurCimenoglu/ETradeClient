@@ -20,9 +20,10 @@ import {
 import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login/socialauth.service';
 import { SocialLoginModule } from '@abacritt/angularx-social-login';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-component.directive';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent, LoginComponent, DynamicLoadComponentDirective],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -44,6 +45,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [
     { provide: 'baseUrl', useValue: 'https://localhost:7245/api', multi: true },
+    { provide: 'baseSignalRUrl', useValue: 'https://localhost:7245/', multi: true },
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
