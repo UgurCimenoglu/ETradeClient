@@ -1,9 +1,12 @@
+import { BasketComplatedDialogComponent } from './../../../dialogs/basket-complated-dialog/basket-complated-dialog.component';
 import { List_Basket_Item } from './../../../contracts/basket/list_basket_item';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { BaseUrl } from 'src/app/contracts/base_url';
+import { BasketItemRemoveDialogComponent } from 'src/app/dialogs/basket-item-remove-dialog/basket-item-remove-dialog.component';
+import { DialogService } from 'src/app/services/common/dialog.service';
 import { BasketsService } from 'src/app/services/common/models/baskets.service';
 import { FileService } from 'src/app/services/common/models/file.service';
 import { OrderService } from 'src/app/services/common/models/order.service';
@@ -25,7 +28,8 @@ export class BasketsComponent extends BaseComponent implements OnInit {
     private fileService: FileService,
     private orderService: OrderService,
     private toastrService: CustomToastrService,
-    private router: Router
+    private router: Router,
+    private dialogService: DialogService
   ) {
     super(spinner);
   }
@@ -50,9 +54,15 @@ export class BasketsComponent extends BaseComponent implements OnInit {
   }
 
   async removeToBasket(basketItemId: string) {
-    this.basketSpinner = true;
-    await this.basketService.remove(basketItemId);
-    await this.getBasketItems();
+    this.dialogService.openDialog({
+      componentType: BasketItemRemoveDialogComponent,
+      beforeClosed: async () => {
+        this.basketSpinner = true;
+        await this.basketService.remove(basketItemId);
+        await this.getBasketItems();
+        this.basketSpinner = false;
+      },
+    });
   }
 
   async openBasket() {
@@ -69,7 +79,7 @@ export class BasketsComponent extends BaseComponent implements OnInit {
       price: item.quantity * item.price,
     }));
     this.calculateTotalBasketPrice(this.basketItems);
-    console.log(this.basketItems)
+    console.log(this.basketItems);
     this.basketSpinner = false;
   }
 
@@ -82,24 +92,30 @@ export class BasketsComponent extends BaseComponent implements OnInit {
   }
 
   async complateOrder() {
-    this.showSpinner(SpinnerType.BallSpinClockwise);
-    await this.orderService.create(
-      {
-        address: 'Esentepe Mahallesi 23.Sokak Istanbul',
-        description: 'Hediye Paketi Yapabilir Misiniz?',
-      },
-      () => {
-        this.toastrService.message(
-          'Siparişiniz başarıyla oluşturulmuştur',
-          'Başarılı',
+    this.dialogService.openDialog({
+      componentType: BasketComplatedDialogComponent,
+      beforeClosed: async () => {
+        this.showSpinner(SpinnerType.BallSpinClockwise);
+        await this.orderService.create(
           {
-            messageType: ToastrMessageType.Success,
-            position: ToastrPosition.TopRight,
+            address: 'Esentepe Mahallesi 23.Sokak Istanbul',
+            description: 'Hediye Paketi Yapabilir Misiniz?',
+          },
+          () => {
+            this.router.navigate(['/']);
+            window.location.reload();
+            this.toastrService.message(
+              'Siparişiniz başarıyla oluşturulmuştur',
+              'Başarılı',
+              {
+                messageType: ToastrMessageType.Success,
+                position: ToastrPosition.TopRight,
+              }
+            );
           }
         );
-        this.router.navigate(['/']);
-      }
-    );
-    this.hideSpinner(SpinnerType.BallSpinClockwise);
+        this.hideSpinner(SpinnerType.BallSpinClockwise);
+      },
+    });
   }
 }

@@ -21,9 +21,10 @@ import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login/sociala
 import { SocialLoginModule } from '@abacritt/angularx-social-login';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-component.directive';
+import { BasketComplatedDialogComponent } from './dialogs/basket-complated-dialog/basket-complated-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, DynamicLoadComponentDirective],
+  declarations: [AppComponent, LoginComponent, DynamicLoadComponentDirective ],
   imports: [
     BrowserModule,
     AppRoutingModule,
