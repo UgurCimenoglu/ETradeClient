@@ -9,6 +9,8 @@ import { FileUploadModule } from 'src/app/services/common/file-upload/file-uploa
 import { FormsModule } from '@angular/forms';
 import { BasketItemRemoveDialogComponent } from '../basket-item-remove-dialog/basket-item-remove-dialog.component';
 import { BasketComplatedDialogComponent } from '../basket-complated-dialog/basket-complated-dialog.component';
+import { OrderDetailDialogComponent } from '../order-detail-dialog/order-detail-dialog.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,7 @@ import { BasketComplatedDialogComponent } from '../basket-complated-dialog/baske
     SelectProductImageDialogComponent,
     BasketItemRemoveDialogComponent,
     BasketComplatedDialogComponent,
+    OrderDetailDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -24,6 +27,7 @@ import { BasketComplatedDialogComponent } from '../basket-complated-dialog/baske
     MatCardModule,
     FileUploadModule,
     FormsModule,
+    MatTableModule
   ],
 })
 export class DialogModule {}

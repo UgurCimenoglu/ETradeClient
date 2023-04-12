@@ -43,14 +43,12 @@ export class ListComponent extends BaseComponent implements OnInit {
   async ngOnInit() {
     await this.getProducts();
   }
-
   addProductImages(id: string) {
     this.dialogService.openDialog({
       componentType: SelectProductImageDialogComponent,
       data: id,
     });
   }
-
   async pageChanged() {
     await this.getProducts();
   }

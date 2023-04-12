@@ -11,8 +11,9 @@ export class DialogService {
   openDialog(dialogParameters: Partial<DialogParameters>): void {
     const dialogRef = this.dialog.open(dialogParameters.componentType, {
       data: dialogParameters.data,
+      width: dialogParameters.width,
+      height: dialogParameters.height,
     });
-
     dialogRef.beforeClosed().subscribe((result) => {
       if (result === 1) {
         dialogParameters.beforeClosed && dialogParameters.beforeClosed();
@@ -28,4 +29,6 @@ export class DialogParameters {
   beforeClosed?: () => any;
   reject?: () => any;
   data?: any;
+  width?: any;
+  height?: any;
 }

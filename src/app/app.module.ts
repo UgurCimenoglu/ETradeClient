@@ -22,9 +22,10 @@ import { SocialLoginModule } from '@abacritt/angularx-social-login';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-component.directive';
 import { BasketComplatedDialogComponent } from './dialogs/basket-complated-dialog/basket-complated-dialog.component';
+import { OrderDetailDialogComponent } from './dialogs/order-detail-dialog/order-detail-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, DynamicLoadComponentDirective ],
+  declarations: [AppComponent, LoginComponent, DynamicLoadComponentDirective],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -46,7 +47,11 @@ import { BasketComplatedDialogComponent } from './dialogs/basket-complated-dialo
   ],
   providers: [
     { provide: 'baseUrl', useValue: 'https://localhost:7245/api', multi: true },
-    { provide: 'baseSignalRUrl', useValue: 'https://localhost:7245/', multi: true },
+    {
+      provide: 'baseSignalRUrl',
+      useValue: 'https://localhost:7245/',
+      multi: true,
+    },
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
@@ -66,7 +71,11 @@ import { BasketComplatedDialogComponent } from './dialogs/basket-complated-dialo
         onError: (err) => console.log(err),
       } as SocialAuthServiceConfig,
     },
-    {provide:HTTP_INTERCEPTORS,useClass:HttpErrorHandlerInterceptorService,multi:true} //http error intertceptoru projeye tanımlıyoruz.
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorHandlerInterceptorService,
+      multi: true,
+    }, //http error intertceptoru projeye tanımlıyoruz.
   ],
   bootstrap: [AppComponent],
 })
