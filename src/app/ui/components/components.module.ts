@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ProductsModule } from './products/products.module';
 import { HomeModule } from './home/home.module';
 import { BasketsModule } from './baskets/baskets.module';
-import { LoginModule } from './login/login.module';
+import { PasswordResetModule } from './password-reset/password-reset.module';
+import { PasswordUpdateModule } from './password-update/password-update.module';
 
 @NgModule({
   declarations: [],
@@ -15,6 +16,8 @@ import { LoginModule } from './login/login.module';
     BasketsModule,
     RegisterModule,
     //LoginModule,
+    PasswordResetModule,
+    PasswordUpdateModule,
   ],
   exports: [BasketsModule],
 })
