@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { List_Order } from 'src/app/contracts/order/list_order';
 import { List_Product } from 'src/app/contracts/product_list';
+import { CompleteOrderDialogComponent } from 'src/app/dialogs/complete-order-dialog/complete-order-dialog.component';
 import { OrderDetailDialogComponent } from 'src/app/dialogs/order-detail-dialog/order-detail-dialog.component';
 import {
   AlertifyService,
@@ -14,6 +15,11 @@ import {
 import { DialogService } from 'src/app/services/common/dialog.service';
 import { OrderService } from 'src/app/services/common/models/order.service';
 import { ProductService } from 'src/app/services/common/models/product.service';
+import {
+  CustomToastrService,
+  ToastrMessageType,
+  ToastrPosition,
+} from 'src/app/services/ui/custom-toastr.service';
 
 @Component({
   selector: 'app-list',
@@ -25,7 +31,8 @@ export class ListComponent extends BaseComponent implements OnInit {
     private orderService: OrderService,
     private alertifyService: AlertifyService,
     private dialogService: DialogService,
-    private spinnerService: NgxSpinnerService
+    private spinnerService: NgxSpinnerService,
+    private toastrService: CustomToastrService
   ) {
     super(spinnerService);
   }
@@ -67,12 +74,33 @@ export class ListComponent extends BaseComponent implements OnInit {
     await this.getOrders();
   }
 
-  showDetail(id: number) {
+  showDetail(id: string) {
     this.dialogService.openDialog({
       componentType: OrderDetailDialogComponent,
-      data:id,
-      width:"750px",
-      beforeClosed: () => {},
+      data: id,
+      width: '750px',
+      beforeClosed: () => {
+        this.dialogService.openDialog({
+          componentType: CompleteOrderDialogComponent,
+          data: id,
+          width: '750px',
+          beforeClosed: async () => {
+            await this.orderService
+              .completeOrder(id)
+              .then((result) => {
+                this.toastrService.message(
+                  'Sipariş tamamlandı',
+                  'Bilgilendirme',
+                  {
+                    messageType: ToastrMessageType.Info,
+                    position: ToastrPosition.TopRight,
+                  }
+                );
+              })
+              .catch(() => {});
+          },
+        });
+      },
     });
   }
 }

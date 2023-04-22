@@ -23,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-component.directive';
 import { BasketComplatedDialogComponent } from './dialogs/basket-complated-dialog/basket-complated-dialog.component';
 import { OrderDetailDialogComponent } from './dialogs/order-detail-dialog/order-detail-dialog.component';
+import { CompleteOrderDialogComponent } from './dialogs/complete-order-dialog/complete-order-dialog.component';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, DynamicLoadComponentDirective],

@@ -51,16 +51,41 @@ export class OrderService {
     return await promiseData;
   }
 
-  async getOrderById(id:string,successCallback?:()=>void,errorCallback?:(error:string)=>void){
-    const observable : Observable<SingleOrder> = this.httpClientService.get<SingleOrder>({
-      controller:"orders", 
-    },id)
+  async getOrderById(
+    id: string,
+    successCallback?: () => void,
+    errorCallback?: (error: string) => void
+  ) {
+    const observable: Observable<SingleOrder> =
+      this.httpClientService.get<SingleOrder>(
+        {
+          controller: 'orders',
+        },
+        id
+      );
     const promiseData = firstValueFrom(observable);
-    promiseData.then(result=>{
-      successCallback();
-    }).catch(e=>{
-      errorCallback(e);
-    })
+    promiseData
+      .then((result) => {
+        successCallback();
+      })
+      .catch((e) => {
+        errorCallback(e);
+      });
     return await promiseData;
+  }
+
+  async completeOrder(
+    id: string,
+    successCallback?: () => void,
+    errorCallback?: (error: string) => void
+  ) {
+    const observable: Observable<any> = this.httpClientService.get(
+      {
+        controller: 'orders',
+        action: 'complete-order',
+      },
+      id
+    );
+    await firstValueFrom(observable);
   }
 }
