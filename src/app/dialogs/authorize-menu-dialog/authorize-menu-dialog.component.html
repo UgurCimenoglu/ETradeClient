@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{data.name}} - Endpoint'ine Rol Atama</h1>
+<div mat-dialog-content>
+  <p>{{ data.name }} - endpointine rol atamak istediğinizden emin misiniz?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="0">İptal</button>
+  <button mat-button [mat-dialog-close]="1" cdkFocusInitial>Evet</button>
+</div>

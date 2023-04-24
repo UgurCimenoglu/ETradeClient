@@ -35,6 +35,14 @@ const routes: Routes = [
           ),
         canActivate: [AuthGuard],
       },
+      {
+        path: 'authorize-menu',
+        loadChildren: () =>
+          import(
+            './admin/components/authorize-menu/authorize-menu.module'
+          ).then((module) => module.AuthorizeMenuModule),
+        canActivate: [AuthGuard],
+      },
     ],
     canActivate: [AuthGuard], //AuthGuard'ın içindeki logicler sağlandığı sürece bu objedeki routelere erişebileceğiz. AuthGuard bize true veya false dönecek
   },
