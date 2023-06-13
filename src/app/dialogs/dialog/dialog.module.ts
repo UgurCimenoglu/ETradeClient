@@ -13,8 +13,8 @@ import { OrderDetailDialogComponent } from '../order-detail-dialog/order-detail-
 import { MatTableModule } from '@angular/material/table';
 import { CompleteOrderDialogComponent } from '../complete-order-dialog/complete-order-dialog.component';
 import { AuthorizeMenuDialogComponent } from '../authorize-menu-dialog/authorize-menu-dialog.component';
-import {MatBadgeModule} from '@angular/material/badge';
-
+import { MatBadgeModule } from '@angular/material/badge';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,8 @@ import {MatBadgeModule} from '@angular/material/badge';
     FileUploadModule,
     FormsModule,
     MatTableModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatListModule
   ],
 })
 export class DialogModule {}

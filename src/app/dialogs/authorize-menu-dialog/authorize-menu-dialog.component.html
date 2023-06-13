@@ -1,7 +1,23 @@
-<h1 mat-dialog-title>{{data.name}} - Endpoint'ine Rol Atama</h1>
+<div
+  matBadge="{{ role.selectedOptions.selected.length }}/{{roles.totalCount}}"
+  matBadgeOverlap="false"
+  class="demo-section"
+  style="margin-right: 13px"
+>
+  <br />
+  <h1 mat-dialog-title>{{ data.name }} - Endpoint'ine Rol Atama</h1>
+</div>
+
 <div mat-dialog-content>
   <p>{{ data.name }} - endpointine rol atamak istediğinizden emin misiniz?</p>
 </div>
+
+<mat-selection-list #role>
+  <mat-list-option *ngFor="let role of roles.datas">
+    {{ role.name }}
+  </mat-list-option>
+</mat-selection-list>
+
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="0">İptal</button>
   <button mat-button [mat-dialog-close]="1" cdkFocusInitial>Evet</button>

@@ -1,3 +1,4 @@
+import { RoleModule } from './role/role.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { CustomersModule } from './customers/customers.module';
 import { OrdersModule } from './orders/orders.module';
@@ -15,6 +16,7 @@ import { AuthorizeMenuModule } from './authorize-menu/authorize-menu.module';
     CustomersModule,
     DashboardModule,
     AuthorizeMenuModule,
+    RoleModule,
   ],
 })
 export class ComponentsModule {}

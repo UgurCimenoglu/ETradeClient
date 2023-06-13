@@ -74,7 +74,7 @@ export class AuthorizeMenuComponent implements OnInit {
   }
 
   assignRole(code: string, name: string) {
-    console.log(code,name);
+    console.log(code, name);
     this.dialogService.openDialog({
       componentType: AuthorizeMenuDialogComponent,
       data: { code, name },

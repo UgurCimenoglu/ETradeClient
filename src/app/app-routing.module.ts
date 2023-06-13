@@ -43,6 +43,14 @@ const routes: Routes = [
           ).then((module) => module.AuthorizeMenuModule),
         canActivate: [AuthGuard],
       },
+      {
+        path: 'roles',
+        loadChildren: () =>
+          import('./admin/components/role/role.module').then(
+            (module) => module.RoleModule
+          ),
+        canActivate: [AuthGuard],
+      },
     ],
     canActivate: [AuthGuard], //AuthGuard'ın içindeki logicler sağlandığı sürece bu objedeki routelere erişebileceğiz. AuthGuard bize true veya false dönecek
   },

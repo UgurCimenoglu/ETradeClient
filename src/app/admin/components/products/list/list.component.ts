@@ -12,6 +12,8 @@ import { ProductService } from 'src/app/services/common/models/product.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatPaginator } from '@angular/material/paginator';
 import { SelectProductImageDialogComponent } from 'src/app/dialogs/select-product-image-dialog/select-product-image-dialog.component';
+import { RoleService } from 'src/app/services/common/models/role.service';
+import { List_Role } from 'src/app/contracts/roles/list_role';
 
 @Component({
   selector: 'app-list',
@@ -39,7 +41,7 @@ export class ListComponent extends BaseComponent implements OnInit {
     'edit',
     'delete',
   ];
-  dataSource: MatTableDataSource<List_Product> = null;
+  dataSource: MatTableDataSource<List_Role> = null;
   async ngOnInit() {
     await this.getProducts();
   }
@@ -68,9 +70,7 @@ export class ListComponent extends BaseComponent implements OnInit {
           });
         }
       );
-    this.dataSource = new MatTableDataSource<List_Product>(
-      allProducts.products
-    );
+    this.dataSource = new MatTableDataSource<List_Role>(allProducts.products);
     this.paginator.length = allProducts.totalCount;
   }
   delete(id: number, event: MouseEvent) {
