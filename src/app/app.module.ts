@@ -21,6 +21,7 @@ import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login/sociala
 import { SocialLoginModule } from '@abacritt/angularx-social-login';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-component.directive';
+import { AuthorizeUserDialogComponent } from './dialogs/authorize-user-dialog/authorize-user-dialog.component';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, DynamicLoadComponentDirective],

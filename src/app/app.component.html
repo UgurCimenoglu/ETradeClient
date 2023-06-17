@@ -18,6 +18,7 @@
       </li>
     </ul>
     <button class="btn btn-outline-secondary" type="button" routerLink="login" *ngIf="!authService.isAuthenticated">Giriş Yap</button>
+    <button class="btn btn-outline-primary" type="button" routerLink="register" *ngIf="!authService.isAuthenticated">Kayıt Ol</button>
     <button class="btn btn-outline-warning mx-2" type="button" (click)="signOut()" *ngIf="authService.isAuthenticated">Çıkış Yap</button>
     <app-baskets *ngIf="authService.isAuthenticated"></app-baskets>
   </div>

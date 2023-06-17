@@ -51,6 +51,14 @@ const routes: Routes = [
           ),
         canActivate: [AuthGuard],
       },
+      {
+        path: 'users',
+        loadChildren: () =>
+          import('./admin/components/user/user.module').then(
+            (module) => module.UserModule
+          ),
+        canActivate: [AuthGuard],
+      },
     ],
     canActivate: [AuthGuard], //AuthGuard'ın içindeki logicler sağlandığı sürece bu objedeki routelere erişebileceğiz. AuthGuard bize true veya false dönecek
   },

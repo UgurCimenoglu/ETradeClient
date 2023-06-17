@@ -13,7 +13,7 @@
 </div>
 
 <mat-selection-list (selectionChange)="setSelectedRoles(role.selectedOptions.selected)" #role>
-  <mat-list-option *ngFor="let role of roles?.datas" [value]="role" selected="{{assignedRoles?.includes(role.id)==true?true:false}}">
+  <mat-list-option *ngFor="let role of roles?.datas" [value]="role" selected="{{assignedRoles?.includes(role.name)==true?true:false}}">
     {{ role.name }}
   </mat-list-option>
 </mat-selection-list>

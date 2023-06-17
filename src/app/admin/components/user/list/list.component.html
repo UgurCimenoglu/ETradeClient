@@ -1,0 +1,69 @@
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+    <!-- UserName Column -->
+    <ng-container matColumnDef="userName">
+      <th mat-header-cell *matHeaderCellDef>UserName</th>
+      <td mat-cell *matCellDef="let element">{{ element.userName }}</td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+
+    <!-- FullName Column -->
+    <ng-container matColumnDef="fullName">
+      <th mat-header-cell *matHeaderCellDef>FullName</th>
+      <td mat-cell *matCellDef="let element">{{ element.fullName }}</td>
+    </ng-container>
+
+    <!-- Created Column -->
+    <ng-container matColumnDef="twoFactorEnabled">
+      <th mat-header-cell *matHeaderCellDef>Two Factor Enabled</th>
+      <td mat-cell *matCellDef="let element">
+        <img
+          [src]="
+            element.twoFactorEnabled
+              ? '../../../../assets/checked.png'
+              : '../../../../assets/reject.png'
+          "
+          width="30px"
+          style="margin-left: 2rem"
+        />
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="setRole">
+      <th mat-header-cell *matHeaderCellDef>Rol Ata</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-stroked-button (click)="assignRole(element.id)">
+          Rol Ata
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>Delete</th>
+      <td
+        [id]="element.id"
+        mat-cell
+        *matCellDef="let element"
+        appDelete
+        (callback)="getAllUsers()"
+        controller="users"
+      ></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    (page)="pageChanged()"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
+</div>

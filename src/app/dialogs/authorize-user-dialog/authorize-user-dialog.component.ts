@@ -7,18 +7,19 @@ import { SpinnerType } from 'src/app/base/base.component';
 import { List_Role } from 'src/app/contracts/roles/list_role';
 import { AuthorizationEndpointService } from 'src/app/services/common/models/authorization-endpoint.service';
 import { RoleService } from 'src/app/services/common/models/role.service';
+import { UserService } from 'src/app/services/common/models/user.service';
 
 @Component({
-  selector: 'app-authorize-menu-dialog',
-  templateUrl: './authorize-menu-dialog.component.html',
-  styleUrls: ['./authorize-menu-dialog.component.scss'],
+  selector: 'app-authorize-user-dialog',
+  templateUrl: './authorize-user-dialog.component.html',
+  styleUrls: ['./authorize-user-dialog.component.scss'],
 })
-export class AuthorizeMenuDialogComponent {
+export class AuthorizeUserDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { code: string; name: string; menuName: string } | any,
+    public data: string | any,
     private roleService: RoleService,
-    private authorizationEndpointService: AuthorizationEndpointService,
+    private userService: UserService,
     private spinner: NgxSpinnerService
   ) {
     console.log(data);
@@ -26,41 +27,40 @@ export class AuthorizeMenuDialogComponent {
 
   async ngOnInit() {
     console.log('xx', this.data);
+    this.spinner.show(SpinnerType.BallSpinClockwise);
     this.roles = await this.roleService.getRoles(
       -1,
       -1,
       () => {},
       () => {}
     );
-    await this.authorizationEndpointService
-      .GetRolesToEndpoint(this.data.code, this.data.menuName)
-      .then((result) => {
-        this.assignedRoles = result.roles;
-      });
+    await this.userService.getRolesToUser(this.data).then((result) => {
+      this.assignedRoles = result.roles;
+    });
+    this.spinner.hide(SpinnerType.BallSpinClockwise);
   }
 
   roles: { datas: List_Role[]; totalCount: number } = null;
   selectedRoles: string[];
-  assignedRoles: string[]|null;
+  assignedRoles: string[] | null;
 
   setSelectedRoles(options: any) {
-    var a = options.map((o) => o.value.id);
+    var a = options.map((o) => o.value.name);
     this.selectedRoles = a;
   }
 
   assignRoles() {
-    console.log(this.data.menuName);
     this.spinner.show(SpinnerType.BallSpinClockwise);
-    this.authorizationEndpointService.assignRoleEndpoint(
+    this.userService.assignRoleToUser(
+      this.data,
       this.selectedRoles,
-      this.data.code,
-      this.data.menuName,
       () => {},
       () => {}
     );
     this.spinner.hide(SpinnerType.BallSpinClockwise);
   }
 }
+
 export enum AuthorizeMenuState {
   Yes = 1,
   No = 0,

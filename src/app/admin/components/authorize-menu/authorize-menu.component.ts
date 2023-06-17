@@ -12,6 +12,7 @@ interface ITreeMenu {
   name?: string;
   actions?: ITreeMenu[];
   code?: string;
+  menuName?: string;
 }
 
 /** Flat node with expandable and level information */
@@ -33,6 +34,7 @@ export class AuthorizeMenuComponent implements OnInit {
       name: menu.name,
       level: level,
       code: menu.code,
+      menuName: menu.menuName,
     };
   };
 
@@ -65,19 +67,21 @@ export class AuthorizeMenuComponent implements OnInit {
           const _treeMenu: ITreeMenu = {
             name: a.definition,
             code: a.code,
+            menuName: m.name,
           };
           return _treeMenu;
         }),
       };
+      console.log('cc', treeMenu);
       return treeMenu;
     });
   }
 
-  assignRole(code: string, name: string) {
-    console.log(code, name);
+  assignRole(code: string, name: string, menuName: string) {
+    console.log(code, name, menuName);
     this.dialogService.openDialog({
       componentType: AuthorizeMenuDialogComponent,
-      data: { code, name },
+      data: { code, name, menuName },
     });
   }
 }
