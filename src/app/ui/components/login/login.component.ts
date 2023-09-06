@@ -42,7 +42,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.frm = this.formBuilder.group({
       usernameOrEmail: [
-        '',
+        'Ugur',
         [
           Validators.required,
           Validators.minLength(3),
@@ -50,7 +50,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
         ],
       ],
       password: [
-        '',
+        '123',
         [
           Validators.required,
           Validators.minLength(3),

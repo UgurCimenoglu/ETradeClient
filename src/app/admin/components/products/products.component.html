@@ -1,7 +1,9 @@
-<p>products works!</p>
+<div class="example-button-row" style="margin: 15px">
+  <button (click)="showProductQRCodeReading()" mat-raised-button color="accent">Product QR Code Reading</button>
+</div>
 <mat-drawer-container class="admin-container">
   <mat-drawer class="admin-left" mode="side" opened>
-    <app-create (createdProduct) = "createdProduct()"></app-create>
+    <app-create (createdProduct)="createdProduct()"></app-create>
   </mat-drawer>
   <mat-drawer-content>
     <app-list></app-list>

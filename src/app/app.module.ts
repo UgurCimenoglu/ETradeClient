@@ -22,6 +22,8 @@ import { SocialLoginModule } from '@abacritt/angularx-social-login';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-component.directive';
 import { AuthorizeUserDialogComponent } from './dialogs/authorize-user-dialog/authorize-user-dialog.component';
+import { QrcodeDialogComponent } from './dialogs/qrcode-dialog/qrcode-dialog.component';
+import { QrcodeReadingDialogComponent } from './dialogs/qrcode-reading-dialog/qrcode-reading-dialog.component';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, DynamicLoadComponentDirective],

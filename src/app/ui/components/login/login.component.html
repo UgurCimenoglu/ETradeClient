@@ -6,6 +6,12 @@
     <div class="card p-5">
       <form [formGroup]="frm" (ngSubmit)="onSubmit(frm.value)">
         <div class="mb-3">
+          <p>Defaul Account İnfo</p>
+          <p>
+            Username: <strong>Ugur </strong>& Password: <strong>123</strong>
+          </p>
+        </div>
+        <div class="mb-3">
           <label for="username" class="form-label">Kullanıcı Adı *</label>
           <input
             type="text"
@@ -73,12 +79,22 @@
             ></asl-google-signin-button>
             <img
               src="../../../../assets/facebook-icon.png"
-              style="width: 31px; margin-left: 5px; z-index: 9999; cursor: pointer;"
+              style="
+                width: 31px;
+                margin-left: 5px;
+                z-index: 9999;
+                cursor: pointer;
+              "
               (click)="openFaceebookLoginInterface()"
             />
           </div>
           <button type="submit" class="btn btn-primary">Giriş Yap</button>
-          <a type="submit" routerLink="/password-reset" class="btn btn-secondary">Şifremi Unuttum!</a>
+          <a
+            type="submit"
+            routerLink="/password-reset"
+            class="btn btn-secondary"
+            >Şifremi Unuttum!</a
+          >
         </div>
       </form>
     </div>

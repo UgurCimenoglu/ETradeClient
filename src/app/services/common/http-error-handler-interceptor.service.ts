@@ -40,6 +40,7 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
               .refreshTokenLogin(
                 localStorage.getItem('refreshToken'),
                 (state: boolean) => {
+                  console.log(state);
                   if (!state) {
                     if (url === '/products') {
                       this.toastrService.message(
@@ -63,7 +64,16 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
                   }
                 }
               )
-              .then((data) => {});
+              .then((data) => {
+                this.toastrService.message(
+                  'Bu işleme erişim yetkiniz bulunmamaktadır!',
+                  'Yetki Hatası!',
+                  {
+                    messageType: ToastrMessageType.Warning,
+                    position: ToastrPosition.TopRight,
+                  }
+                );
+              });
             break;
           case HttpStatusCode.InternalServerError:
             this.toastrService.message(

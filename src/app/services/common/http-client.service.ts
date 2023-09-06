@@ -31,7 +31,10 @@ export class HttpClientService {
         requestParameter.queryString ? `?${requestParameter.queryString}` : ''
       }`;
     }
-    return this.htttpClient.get<T>(url, { headers: requestParameter.headers });
+    return this.htttpClient.get<T>(url, {
+      headers: requestParameter.headers,
+      responseType: requestParameter.responseType as 'json',
+    });
   }
 
   post<T>(
@@ -63,6 +66,7 @@ export class HttpClientService {
     }
     return this.htttpClient.put<T>(url, body, {
       headers: requestParameter.headers,
+      responseType: requestParameter.responseType as 'json',
     });
   }
 
@@ -72,12 +76,15 @@ export class HttpClientService {
   ): Observable<T> {
     let url: string = '';
     if (requestParameter.fullEndpoint) {
-      url= requestParameter.fullEndpoint;
+      url = requestParameter.fullEndpoint;
     } else {
-      url = `${this.url(requestParameter)}/${id}${requestParameter.queryString ? `?${requestParameter.queryString}` : ""}`;
+      url = `${this.url(requestParameter)}/${id}${
+        requestParameter.queryString ? `?${requestParameter.queryString}` : ''
+      }`;
     }
     return this.htttpClient.delete<T>(url, {
       headers: requestParameter.headers,
+      responseType: requestParameter.responseType as 'json',
     });
   }
 }
@@ -89,4 +96,5 @@ export class RequestParameters {
   headers?: HttpHeaders;
   baseUrl?: string;
   fullEndpoint?: string;
+  responseType?: string = 'json';
 }

@@ -14,6 +14,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { SelectProductImageDialogComponent } from 'src/app/dialogs/select-product-image-dialog/select-product-image-dialog.component';
 import { RoleService } from 'src/app/services/common/models/role.service';
 import { List_Role } from 'src/app/contracts/roles/list_role';
+import { QrcodeDialogComponent } from 'src/app/dialogs/qrcode-dialog/qrcode-dialog.component';
 
 @Component({
   selector: 'app-list',
@@ -38,6 +39,7 @@ export class ListComponent extends BaseComponent implements OnInit {
     'createdDate',
     'updatedDate',
     'photos',
+    'qrCode',
     'edit',
     'delete',
   ];
@@ -76,5 +78,13 @@ export class ListComponent extends BaseComponent implements OnInit {
   delete(id: number, event: MouseEvent) {
     console.log(id);
     console.log(event);
+  }
+  showQRCode(productId: string) {
+    this.dialogService.openDialog({
+      componentType: QrcodeDialogComponent,
+      data: productId,
+      height: 'auto',
+      width: 'auto',
+    });
   }
 }
