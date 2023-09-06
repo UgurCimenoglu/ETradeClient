@@ -21,9 +21,6 @@ import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login/sociala
 import { SocialLoginModule } from '@abacritt/angularx-social-login';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-component.directive';
-import { AuthorizeUserDialogComponent } from './dialogs/authorize-user-dialog/authorize-user-dialog.component';
-import { QrcodeDialogComponent } from './dialogs/qrcode-dialog/qrcode-dialog.component';
-import { QrcodeReadingDialogComponent } from './dialogs/qrcode-reading-dialog/qrcode-reading-dialog.component';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, DynamicLoadComponentDirective],
@@ -40,17 +37,17 @@ import { QrcodeReadingDialogComponent } from './dialogs/qrcode-reading-dialog/qr
     JwtModule.forRoot({
       config: {
         tokenGetter: () => localStorage.getItem('accessToken'),
-        allowedDomains: ['localhost:7245'],
+        allowedDomains: ['ecommerce-ugur.azurewebsites.net'],
       },
     }),
     SocialLoginModule,
     ReactiveFormsModule,
   ],
   providers: [
-    { provide: 'baseUrl', useValue: 'https://localhost:7245/api', multi: true },
+    { provide: 'baseUrl', useValue: 'https://ecommerce-ugur.azurewebsites.net/api', multi: true },
     {
       provide: 'baseSignalRUrl',
-      useValue: 'https://localhost:7245/',
+      useValue: 'https://ecommerce-ugur.azurewebsites.net/',
       multi: true,
     },
     {
@@ -61,7 +58,7 @@ import { QrcodeReadingDialogComponent } from './dialogs/qrcode-reading-dialog/qr
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '973727059764-1uns1uhj1rlrra1lm7ncbtjdg3j8eljk.apps.googleusercontent.com'
+              '973727059764-9gnmv16gev7nit8bgh06oopcgmnq0f22.apps.googleusercontent.com'
             ),
           },
           {

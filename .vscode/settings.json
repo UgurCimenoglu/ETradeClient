@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/40352ce1-2ad2-4f4d-8544-100af15998c1/resourceGroups/ecommerce-ugur_group/providers/Microsoft.Web/sites/ecommerce-angular",
+    "appService.deploySubpath": "dist"
+}
