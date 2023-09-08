@@ -44,10 +44,10 @@ import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-
     ReactiveFormsModule,
   ],
   providers: [
-    { provide: 'baseUrl', useValue: 'https://ecommerce-ugur.azurewebsites.net/api', multi: true },
+    { provide: 'baseUrl', useValue: 'https://localhost:7245/api', multi: true },
     {
       provide: 'baseSignalRUrl',
-      useValue: 'https://ecommerce-ugur.azurewebsites.net/',
+      useValue: 'https://localhost:7245/',
       multi: true,
     },
     {

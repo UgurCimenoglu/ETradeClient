@@ -40,19 +40,19 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    // this.spinner.show(SpinnerType.BallSpinClockwise);
-    // console.log(this.authService.isAuthenticated);
-    // if (!this.authService.isAuthenticated) {
-    //   this.socialAuthService.signOut();
-    //   this.router.navigate(['login'], {
-    //     queryParams: { returnUrl: state.url },
-    //   });
-    //   this.toastr.message('Lüttfen Giriş Yapınız!', 'Yetkisiz Erişim!', {
-    //     messageType: ToastrMessageType.Warning,
-    //     position: ToastrPosition.TopRight,
-    //   });
-    // }
-    // this.spinner.hide(SpinnerType.BallSpinClockwise);
+    this.spinner.show(SpinnerType.BallSpinClockwise);
+    console.log(this.authService.isAuthenticated);
+    if (!this.authService.isAuthenticated) {
+      this.socialAuthService.signOut();
+      this.router.navigate(['login'], {
+        queryParams: { returnUrl: state.url },
+      });
+      this.toastr.message('Lüttfen Giriş Yapınız!', 'Yetkisiz Erişim!', {
+        messageType: ToastrMessageType.Warning,
+        position: ToastrPosition.TopRight,
+      });
+    }
+    this.spinner.hide(SpinnerType.BallSpinClockwise);
     return true;
   }
 }
