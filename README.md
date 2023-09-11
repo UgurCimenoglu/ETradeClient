@@ -1,27 +1,23 @@
-# ETradeClient
+İncelemek isterseniz proje link : https://ecommerce-angular.azurewebsites.net/
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.1.
+Projeyi https://github.com/UgurCimenoglu/ETradeBackend reposunda yazdıgım backend ile entegre ettim.
 
-## Development server
+Projede Kullanılan Teknoloji ve Yaklaşımlar:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Material UI & Bootstrap 
 
-## Code scaffolding
+- Custom Http Service
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Custom Directives
 
-## Build
+- Reuseable Dialogs
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Google & Facebook Login Scenario
 
-## Running unit tests
+- SignalR Implementation
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Dynamic Component Loading
 
-## Running end-to-end tests
+- Custom Auth Guard
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![screencapture-ecommerce-angular-azurewebsites-net-products-2023-09-11-16_23_42](https://github.com/UgurCimenoglu/ETradeClient/assets/75705313/6e017f41-08da-45ea-b3c0-1df68f08e72c)
